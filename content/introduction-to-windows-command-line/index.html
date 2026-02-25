@@ -1,0 +1,3635 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://hec7orci7o.github.io/hacktricks/content/introduction-to-windows-command-line/">
+      
+      
+        <link rel="prev" href="../pivoting-tunneling-port-forwarding/">
+      
+      
+        <link rel="next" href="../windows-attacks-and-defense/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.3">
+    
+    
+      
+        <title>Introduction to Windows Command Line - Hacking Notes</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Introduction to Windows Command Line - Hacking Notes" />
+<meta property="og:image" content="https://hec7orci7o.github.io/hacktricks/assets/images/social/content/introduction-to-windows-command-line.png" />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:url" content="https://hec7orci7o.github.io/hacktricks/content/introduction-to-windows-command-line/" />
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:title" content="Introduction to Windows Command Line - Hacking Notes" />
+<meta property="twitter:image" content="https://hec7orci7o.github.io/hacktricks/assets/images/social/content/introduction-to-windows-command-line.png" />
+</head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#admin-commands" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Hacking Notes" class="md-header__button md-logo" aria-label="Hacking Notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Hacking Notes
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Introduction to Windows Command Line
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Hacking Notes" class="md-nav__button md-logo" aria-label="Hacking Notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Hacking Notes
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Welcome
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Content
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Content
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../hacking-wordpress/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hacking WordPress
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../linux-fundamentals/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linux Fundamentals
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../network-enumeration-with-nmap/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Network Enumeration with Nmap
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cracking-passwords-with-hashcat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cracking Passwords with Hashcat
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../file-inclusion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    File Inclusion
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../file-transfers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    File Transfers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sql-injection-fundamentals/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SQL Injection Fundamentals
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../web-requests/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Web Requests
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../using-the-metasploit-framework/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Using the Metasploit Framework
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../javascript-deobfuscation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    JavaScript Deobfuscation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../windows-fundamentals/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Windows Fundamentals
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../linux-privilege-escalation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linux Privilege Escalation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../attacking-web-applications-with-ffuf/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Attacking Web Applications with Ffuf
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../login-brute-forcing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Login Brute Forcing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sqlmap-essentials/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SQLMap Essentials
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../windows-privilege-escalation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Windows Privilege Escalation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../introduction-to-active-directory/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introduction to Active Directory
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../getting-started/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../broken-authentication/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Broken Authentication
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../intro-to-network-traffic-analysis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Intro to Network Traffic Analysis
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cross-site-scripting-xss/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cross-Site Scripting (XSS)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../command-injections/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Command Injections
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../using-web-proxies/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Using Web Proxies
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../footprinting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Footprinting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../attacking-common-applications/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Attacking Common Applications
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../shells-payloads/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Shells & Payloads
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../attacking-common-services/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Attacking Common Services
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../web-attacks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Web Attacks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../file-upload-attacks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    File Upload Attacks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../active-directory-enumeration-attacks/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Active Directory Enumeration & Attacks
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../information-gathering-web-edition/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Information Gathering - Web Edition
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../server-side-attacks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Server-side Attacks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../password-attacks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Password Attacks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pivoting-tunneling-port-forwarding/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pivoting, Tunneling, and Port Forwarding
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introduction to Windows Command Line
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introduction to Windows Command Line
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#admin-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Admin Commands
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#general-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        General Commands
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#terminal-history" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Terminal History
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#file-directory-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        File &amp; Directory Commands
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="File &amp; Directory Commands">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cmdexe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CMD.exe
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#powershell" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PowerShell
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#inputoutput-operators" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Input/Output Operators
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#find-filter-content" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Find &amp; Filter Content
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Find &amp; Filter Content">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cmdexe_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CMD.exe
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#powershell_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PowerShell
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#user-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        User Commands
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="User Commands">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cmdexe_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CMD.exe
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#powershell_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PowerShell
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#networking-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Networking Commands
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Networking Commands">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cmdexe_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CMD.exe
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#powershell_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PowerShell
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#environment-variables" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Environment Variables
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#services" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Services
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Services">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cmdexe_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CMD.exe
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#powershell_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PowerShell
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#scheduled-tasks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scheduled Tasks
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#interacting-with-the-web" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Interacting With The Web
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#event-log" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Event Log
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#windows-registry" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Windows Registry
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Windows Registry">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#registry-hives" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Registry Hives
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#registry-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Registry Commands
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#powershell-scripting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PowerShell Scripting
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="PowerShell Scripting">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#powershell-extensions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PowerShell Extensions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#commands-for-building-a-module" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Commands For Building A Module
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../windows-attacks-and-defense/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Windows Attacks & Defense
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../security-monitoring-siem-fundamentals/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Security Monitoring & SIEM Fundamentals
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../attacking-graphql/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Attacking GraphQL
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../web-fuzzing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Web Fuzzing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pentest-in-a-nutshell/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pentest in a Nutshell
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#admin-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Admin Commands
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#general-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        General Commands
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#terminal-history" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Terminal History
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#file-directory-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        File &amp; Directory Commands
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="File &amp; Directory Commands">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cmdexe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CMD.exe
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#powershell" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PowerShell
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#inputoutput-operators" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Input/Output Operators
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#find-filter-content" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Find &amp; Filter Content
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Find &amp; Filter Content">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cmdexe_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CMD.exe
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#powershell_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PowerShell
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#user-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        User Commands
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="User Commands">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cmdexe_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CMD.exe
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#powershell_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PowerShell
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#networking-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Networking Commands
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Networking Commands">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cmdexe_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CMD.exe
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#powershell_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PowerShell
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#environment-variables" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Environment Variables
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#services" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Services
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Services">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cmdexe_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CMD.exe
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#powershell_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PowerShell
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#scheduled-tasks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scheduled Tasks
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#interacting-with-the-web" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Interacting With The Web
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#event-log" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Event Log
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#windows-registry" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Windows Registry
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Windows Registry">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#registry-hives" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Registry Hives
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#registry-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Registry Commands
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#powershell-scripting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PowerShell Scripting
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="PowerShell Scripting">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#powershell-extensions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PowerShell Extensions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#commands-for-building-a-module" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Commands For Building A Module
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+                
+
+
+
+  
+
+
+  <nav class="md-path" aria-label="Navigation" >
+    <ol class="md-path__list">
+      
+        
+  
+  
+    <li class="md-path__item">
+      <a href="../.." class="md-path__link">
+        
+  <span class="md-ellipsis">
+    Welcome
+  </span>
+
+      </a>
+    </li>
+  
+
+      
+      
+        
+  
+  
+    
+    
+      <li class="md-path__item">
+        <a href="../hacking-wordpress/" class="md-path__link">
+          
+  <span class="md-ellipsis">
+    Content
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ol>
+  </nav>
+
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+  <h1>Introduction to Windows Command Line</h1>
+
+<h2 id="admin-commands">Admin Commands</h2>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>xfreerdp /v:&lt;target IP&gt; /u:&lt;user&gt; /p:&lt;password&gt;</code></td>
+<td>Initiate a RDP connection with the target host.</td>
+</tr>
+<tr>
+<td><code>ssh &lt;user&gt;@&lt;target IP&gt;</code></td>
+<td>Connect to target host via SSH.</td>
+</tr>
+<tr>
+<td><code>&lt;PIPE&gt;</code></td>
+<td>When you see <PIPE> specified in the commands below, it is saying to use the Pipe key (shift+backslash on US Keyboard layouts).</td>
+</tr>
+</tbody>
+</table>
+<h2 id="general-commands">General Commands</h2>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>help &lt;command&gt;</code></td>
+<td>Provides help information for Windows commands.</td>
+</tr>
+<tr>
+<td><code>Get-Help &lt;cmdlet&gt;</code></td>
+<td>Displays help about Windows PowerShell cmdlets and concepts.</td>
+</tr>
+<tr>
+<td><code>Update-Help</code></td>
+<td>Downloads and installs the most up-to-date help files for Windows PowerShell.</td>
+</tr>
+<tr>
+<td><code>CTRL-C</code></td>
+<td>Interrupts a currently running process.</td>
+</tr>
+<tr>
+<td><code>Get-Module</code></td>
+<td>View the modules loaded into your PowerShell session.</td>
+</tr>
+<tr>
+<td><code>Import-Module</code></td>
+<td>Import a module into your PowerShell session.</td>
+</tr>
+<tr>
+<td><code>Get-Command</code></td>
+<td>View all commands, cmdlets, functions, and aliases loaded into your PowerShell session.</td>
+</tr>
+<tr>
+<td><code>Set-Location &lt;path&gt;</code></td>
+<td>Changes our location in the filesystem. Same as using CD.</td>
+</tr>
+<tr>
+<td><code>Get-Content &lt;file&gt;</code></td>
+<td>View the contents of an object. Similar to type or cat.</td>
+</tr>
+<tr>
+<td><code>systeminfo</code></td>
+<td>Displays operating system configuration information for a local or remote machine.</td>
+</tr>
+<tr>
+<td><code>hostname</code></td>
+<td>Displays the name of the current host.</td>
+</tr>
+<tr>
+<td><code>ver</code></td>
+<td>Displays the current Windows version.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="terminal-history">Terminal History</h2>
+<table>
+<thead>
+<tr>
+<th>Command/Key</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>doskey /history</code></td>
+<td>Prints out the session's command history to the terminal or output it to a file when specified.</td>
+</tr>
+<tr>
+<td><code>page up</code></td>
+<td>Places the first command in our session history to the prompt.</td>
+</tr>
+<tr>
+<td><code>page down</code></td>
+<td>Places the last command in history to the prompt.</td>
+</tr>
+<tr>
+<td><code>⇧</code></td>
+<td>Scrolls up through our command history to view previously run commands.</td>
+</tr>
+<tr>
+<td><code>⇩</code></td>
+<td>Scrolls down to our most recent commands run.</td>
+</tr>
+<tr>
+<td><code>⇨</code></td>
+<td>Types the previous command to prompt one character at a time.</td>
+</tr>
+<tr>
+<td><code>F3</code></td>
+<td>Retypes the entire previous entry to our prompt.</td>
+</tr>
+<tr>
+<td><code>F5</code></td>
+<td>Pressing F5 multiple times allows us to cycle through previous commands.</td>
+</tr>
+<tr>
+<td><code>F7</code></td>
+<td>Opens an interactive list of previous commands.</td>
+</tr>
+<tr>
+<td><code>F9</code></td>
+<td>Enters a command to our prompt based on the number specified. The number corresponds to the command's place in our history.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="file-directory-commands">File &amp; Directory Commands</h2>
+<h3 id="cmdexe">CMD.exe</h3>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>dir</code></td>
+<td>Lists directory contents.</td>
+</tr>
+<tr>
+<td><code>dir /A &lt;attributes&gt;</code></td>
+<td>List directory contents with the specified attributes.</td>
+</tr>
+<tr>
+<td><code>dir /A:H</code></td>
+<td>List hidden files in the current directory.</td>
+</tr>
+<tr>
+<td><code>dir /A:R</code></td>
+<td>List read-only files in the current directory.</td>
+</tr>
+<tr>
+<td><code>cd</code></td>
+<td>Prints current working directory.</td>
+</tr>
+<tr>
+<td><code>chdir</code></td>
+<td>Prints current working directory. Alternate command.</td>
+</tr>
+<tr>
+<td><code>cd &lt;path&gt;</code></td>
+<td>Changes the directory.</td>
+</tr>
+<tr>
+<td><code>chdir &lt;path&gt;</code></td>
+<td>Changes the directory. Alternate command.</td>
+</tr>
+<tr>
+<td><code>tree &lt;path&gt;</code></td>
+<td>Graphically displays the directory structure from the specified path.</td>
+</tr>
+<tr>
+<td><code>tree /F &lt;path&gt;</code></td>
+<td>Graphically displays the directory structure from the specified path, including files within the directory</td>
+</tr>
+<tr>
+<td><code>cls</code></td>
+<td>Clears the terminal.</td>
+</tr>
+<tr>
+<td><code>mkdir &lt;directory name&gt;</code></td>
+<td>Creates a directory in the current working directory(or specified directory) with the specified name.</td>
+</tr>
+<tr>
+<td><code>md &lt;directory name&gt;</code></td>
+<td>Creates a directory in the current working directory(or specified directory) with the specified name. Alias of mkdir.</td>
+</tr>
+<tr>
+<td><code>rmdir &lt;directory name&gt;</code></td>
+<td>Removes a directory in the current working directory(or specified directory) with the specified name.</td>
+</tr>
+<tr>
+<td><code>rd &lt;directory name&gt;</code></td>
+<td>Removes a directory in the current working directory(or specified directory) with the specified name. Alias of rmdir</td>
+</tr>
+<tr>
+<td><code>rmdir /S &lt;directory name&gt;</code></td>
+<td>Recursively removes all directories and files in the specified directory.</td>
+</tr>
+<tr>
+<td><code>move [source] [destination]</code></td>
+<td>Move file(s) from the source folder to the destination folder.</td>
+</tr>
+<tr>
+<td><code>copy [source] [destination]</code></td>
+<td>Copy file(s) from the source folder to the destination folder. Only works with files and not folders.</td>
+</tr>
+<tr>
+<td><code>copy [source] [destination] /V</code></td>
+<td>Copy file(s) from the source folder to the destination folder. Validates that the file or files are copied correctly.</td>
+</tr>
+<tr>
+<td><code>xcopy [source] [destination]</code></td>
+<td>Copy file(s) and folder(s) from the source folder to the destination folder. Replaced by Robocopy and currently deprecated.</td>
+</tr>
+<tr>
+<td><code>xcopy /E [source] [destination]</code></td>
+<td>Copy file(s) and folder(s) from the source folder to the destination folder, including empty directories.</td>
+</tr>
+<tr>
+<td><code>xcopy /K [source] [destination]</code></td>
+<td>Copy file(s) and folder(s) from the source folder to the destination folder. Retains the current attributes of the copied files.</td>
+</tr>
+<tr>
+<td><code>robocopy [source] [destination]</code></td>
+<td>Copy files(s) and folder(s) from the source folder to the destination folder. It has a more robust feature set compared to xcopy.</td>
+</tr>
+<tr>
+<td><code>robocopy /E /MIR /A-:SH [source] [destination]</code></td>
+<td>Copy files(s) and folder(s) from the source folder to the destination folder. Mirrors the destination directory to the source and clears any additional attributes using the /A-:SH parameter.</td>
+</tr>
+<tr>
+<td><code>more &lt;file&gt;</code></td>
+<td>Displays the output of a file or command one screen at a time.</td>
+</tr>
+<tr>
+<td><code>more /S &lt;file&gt;</code></td>
+<td>Displays the output of a file or command one screen at a time. Compresses multiple blank lines into a single line.</td>
+</tr>
+<tr>
+<td><code>&lt;command&gt; &lt;PIPE&gt; more</code></td>
+<td>Displays the output of a command through a <PIPE> to more.</td>
+</tr>
+<tr>
+<td><code>type &lt;file&gt;</code></td>
+<td>Displays the contents of a file.</td>
+</tr>
+<tr>
+<td><code>fsutil file createNew &lt;filename&gt; &lt;length&gt;</code></td>
+<td>Creates a new file with a specified file name and length.</td>
+</tr>
+<tr>
+<td><code>echo "example string" &gt; &lt;filename&gt;</code></td>
+<td>Writes the contents provided into a new or existing file with the specified filename. If the file does not exist, a new one will be created; otherwise, the previous file's contents will be overwritten.</td>
+</tr>
+<tr>
+<td><code>echo "example string" &gt;&gt; &lt;filename&gt;</code></td>
+<td>Appends the provided contents to an existing file.</td>
+</tr>
+<tr>
+<td><code>ren &lt;filename1&gt; &lt;filename2&gt;</code></td>
+<td>Renames a file.</td>
+</tr>
+<tr>
+<td><code>del &lt;file&gt;</code></td>
+<td>Deletes a file or files.</td>
+</tr>
+<tr>
+<td><code>del /A:R &lt;file&gt;</code></td>
+<td>Deletes a file or files with the read-only attribute set.</td>
+</tr>
+<tr>
+<td><code>del /A:H &lt;file&gt;</code></td>
+<td>Deletes a file or files with the hidden attribute set.</td>
+</tr>
+<tr>
+<td><code>erase &lt;file&gt;</code></td>
+<td>Deletes a file or files. Interchangeable with del command.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="powershell">PowerShell</h3>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Alias</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Get-Item</code></td>
+<td><code>gi</code></td>
+<td>Retrieve an object (could be a file, folder, registry object, etc.)</td>
+</tr>
+<tr>
+<td><code>Get-ChildItem</code></td>
+<td><code>ls / dir / gci</code></td>
+<td>Lists out the content of a folder or registry hive.</td>
+</tr>
+<tr>
+<td><code>New-Item</code></td>
+<td><code>md / mkdir / ni</code></td>
+<td>Create new objects. ( can be files, folders, symlinks, registry entries and more)</td>
+</tr>
+<tr>
+<td><code>new-item -name "Name" -ItemType &lt;directory/file&gt;</code></td>
+<td>Specify the new items name and object type.</td>
+<td></td>
+</tr>
+<tr>
+<td><code>Set-Item</code></td>
+<td><code>si</code></td>
+<td>Modify the property values of an object.</td>
+</tr>
+<tr>
+<td><code>Copy-Item</code></td>
+<td><code>copy / cp / ci</code></td>
+<td>Make a duplicate of the item.</td>
+</tr>
+<tr>
+<td><code>Rename-Item</code></td>
+<td><code>ren / rni</code></td>
+<td>Changes the object name.</td>
+</tr>
+<tr>
+<td><code>Rename-Item .\Object-1.md -NewName Object-2.md</code></td>
+<td>Rename object-1 to object-2.</td>
+<td></td>
+</tr>
+<tr>
+<td><code>Remove-Item</code></td>
+<td><code>rm / del / rmdir</code></td>
+<td>Deletes the object.</td>
+</tr>
+<tr>
+<td><code>Get-Content</code></td>
+<td><code>cat / type</code></td>
+<td>Displays the content within a file or object.</td>
+</tr>
+<tr>
+<td><code>Add-Content &lt;file&gt; "Content to add"</code></td>
+<td><code>ac</code></td>
+<td>Append content to a file.</td>
+</tr>
+<tr>
+<td><code>Set-Content</code></td>
+<td><code>sc</code></td>
+<td>overwrite any content in a file with new data.</td>
+</tr>
+<tr>
+<td><code>Clear-Content</code></td>
+<td><code>clc</code></td>
+<td>Clear the content of the files without deleting the file itself.</td>
+</tr>
+<tr>
+<td><code>Compare-Object</code></td>
+<td><code>diff / compare</code></td>
+<td>Compare two or more objects against each other. This includes the object itself and the content within.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="inputoutput-operators">Input/Output Operators</h2>
+<table>
+<thead>
+<tr>
+<th>Operator</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>[command] &gt; [file]</code></td>
+<td>Redirects the output from a command into a file. Overwrites the specified files' contents.</td>
+</tr>
+<tr>
+<td><code>[command] &gt;&gt; [file]</code></td>
+<td>Redirects the output from a command into a file. Appends additional output without overwriting the file's original contents.</td>
+</tr>
+<tr>
+<td><code>[command] &lt; [file]</code></td>
+<td>Redirects the output of the file and passes it into the command.</td>
+</tr>
+<tr>
+<td><code>[command] | [command2]</code></td>
+<td>Redirects the output of the first command into a <PIPE> and provides it to the second command.</td>
+</tr>
+<tr>
+<td><code>[command] &amp; [command2]</code></td>
+<td>Executes both commands in succession. It does not perform checks to see if either command passes or fails.</td>
+</tr>
+<tr>
+<td><code>[command] &amp;&amp; [command2]</code></td>
+<td>Checks to see if the first command executes successfully and then executes the second command. If the first command fails, the current command execution halts and the second command is not executed.</td>
+</tr>
+<tr>
+<td><code>[command] || [command2]</code></td>
+<td>Checks to see if the first command fails to execute successfully and, if so, proceeds to execute the second command.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="find-filter-content">Find &amp; Filter Content</h2>
+<h3 id="cmdexe_1">CMD.exe</h3>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>where &lt;file&gt;</code></td>
+<td>Displays the location of file(s) provided.</td>
+</tr>
+<tr>
+<td><code>where /R &lt;working directory&gt; &lt;file&gt;</code></td>
+<td>Recursively searches for the file(s) provided starting from the specified directory.</td>
+</tr>
+<tr>
+<td><code>find "example string" &lt;file&gt;</code></td>
+<td>Searches for a string of text in a file or files, and displays lines of text that contain the specified string.</td>
+</tr>
+<tr>
+<td><code>findstr</code></td>
+<td>Searches for patterns of text in files. Similar to grep on Unix/Linux.</td>
+</tr>
+<tr>
+<td><code>comp &lt;file1&gt; &lt;file2&gt;</code></td>
+<td>Compares the contents of two files or sets of files byte-by-byte.</td>
+</tr>
+<tr>
+<td><code>fc &lt;file1&gt; &lt;file2&gt;</code></td>
+<td>Compares two files or sets of files and displays the differences between them.</td>
+</tr>
+<tr>
+<td><code>sort</code></td>
+<td>Reads input, sorts data, and writes the results to the screen, a file, or another device.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="powershell_1">PowerShell</h3>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Get-Item &lt;item&gt; &lt;PIPE&gt; get-member</code></td>
+<td>Use Get-Item to select an object and then Get-Member to view the object's properties.</td>
+</tr>
+<tr>
+<td><code>Get-Item &lt;item&gt; &lt;PIPE&gt; Select-Object -Property *</code></td>
+<td>Select an object and then view its Property values.</td>
+</tr>
+<tr>
+<td><code>Get-Item * &lt;PIPE&gt; Select-Object -Property Name,PasswordLastSet</code></td>
+<td>Select objects and then filter to view specific properties.</td>
+</tr>
+<tr>
+<td><code>Get-Item * &lt;PIPE&gt; Sort-Object -Property Name &lt;PIPE&gt; Group-Object -property Enabled</code></td>
+<td>Sort and view Objects by a specific property setting.</td>
+</tr>
+<tr>
+<td><code>Get-ChildItem -Path C:\Users\MTanaka\ -File -Recurse</code></td>
+<td>List all File objects in the directory specified.</td>
+</tr>
+<tr>
+<td><code>Get-Childitem -Path C:\Users\MTanaka\ -File -Recurse -ErrorAction SilentlyContinue &lt;PIPE&gt; where {($_.Name -like "*.txt")}</code></td>
+<td>Search for all objects with the '.txt' file extension.</td>
+</tr>
+<tr>
+<td><code>Get-Childitem –Path C:\Users\MTanaka\ -File -Recurse -ErrorAction SilentlyContinue &lt;PIPE&gt; where {($_.Name -like "*.txt" -or $_.Name -like "*.py" -or $_.Name -like "*.ps1" -or $_.Name -like "*.md" -or $_.Name -like "*.csv")}</code></td>
+<td>Search for objects matching a list of different file extensions.</td>
+</tr>
+<tr>
+<td><code>Get-ChildItem -Path C:\Users\MTanaka\ -Filter "*.txt" -Recurse -File &lt;PIPE&gt; sls "Password","credential","key"</code></td>
+<td>Searching for keywords within an object's content.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="user-commands">User Commands</h2>
+<h3 id="cmdexe_2">CMD.exe</h3>
+<table>
+<thead>
+<tr>
+<th>Commands</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>whoami</code></td>
+<td>Displays the username of the currently logged-on user.</td>
+</tr>
+<tr>
+<td><code>whoami /priv</code></td>
+<td>Displays the security privileges of the current user.</td>
+</tr>
+<tr>
+<td><code>whoami /groups</code></td>
+<td>Displays the user groups that the current user belongs to.</td>
+</tr>
+<tr>
+<td><code>whoami /all</code></td>
+<td>Displays all information about the current user, including username, security identifiers (SID), privileges, and groups.</td>
+</tr>
+<tr>
+<td><code>net user</code></td>
+<td>Displays a list of the user accounts on the computer</td>
+</tr>
+<tr>
+<td><code>net localgroup</code></td>
+<td>Displays the name of the server and the names of local groups on the computer.</td>
+</tr>
+<tr>
+<td><code>net group</code></td>
+<td>Displays the name of a server and the names of groups on the server. Only able to be used if the machine is joined to the domain.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="powershell_2">PowerShell</h3>
+<table>
+<thead>
+<tr>
+<th>Commands</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Get-LocalGroup</code></td>
+<td>View all groups specific to the host only.</td>
+</tr>
+<tr>
+<td><code>Get-LocalUser</code></td>
+<td>View all local users. Similar to net user.</td>
+</tr>
+<tr>
+<td><code>New-LocalUser -Name "username" -NoPassword</code></td>
+<td>Create a new Local user.</td>
+</tr>
+<tr>
+<td><code>Set-LocalUser -Name "username" -Password $Password -Description "users description"</code></td>
+<td>Modify a local user's settings.</td>
+</tr>
+<tr>
+<td><code>Get-LocalGroupMember -Name "Group Name"</code></td>
+<td>Check Group membership.</td>
+</tr>
+<tr>
+<td><code>Add-LocalGroupMember -Group "Group Name" -Member "User-To-Add"</code></td>
+<td>Add a user to a local group.</td>
+</tr>
+<tr>
+<td><code>Get-WindowsCapability -Name RSAT* -Online \| Add-WindowsCapability -Online</code></td>
+<td>Install Remote System Administration Tools.</td>
+</tr>
+<tr>
+<td><code>Get-Module -Name ActiveDirectory -ListAvailable</code></td>
+<td>Locate the Active Directory module.</td>
+</tr>
+<tr>
+<td><code>Get-ADUser -FIlter *</code></td>
+<td>List all domain users.</td>
+</tr>
+<tr>
+<td><code>Get-ADUser -Identity &lt;name&gt;</code></td>
+<td>Show a specific domain user and its properties.</td>
+</tr>
+<tr>
+<td><code>Get-ADUser -Filter {EmailAddress -like '*greenhorn.corp'}</code></td>
+<td>Filter domain users based on the EmailAddress property.</td>
+</tr>
+<tr>
+<td><code>New-ADUser -Name "UserName" -Surname "Last Name" -GivenName "First Name" -Office "Security" -OtherAttributes @{'title'="Sensei";'mail'="UserName@greenhorn.corp"} -Accountpassword (Read-Host -AsSecureString "AccountPassword") -Enabled $true</code></td>
+<td>Create a New Domain user and set its properties such as name, password, and other attributes.</td>
+</tr>
+<tr>
+<td><code>Set-ADUser -Identity &lt;UserName&gt; -Description " Information we want in the description field"</code></td>
+<td>Modify the property settings of a domain user.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="networking-commands">Networking Commands</h2>
+<h3 id="cmdexe_3">CMD.exe</h3>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ipconfig</code></td>
+<td>View basic networking configurations.</td>
+</tr>
+<tr>
+<td><code>ipconfig /?</code></td>
+<td>Displays help and usage information for ipconfig.</td>
+</tr>
+<tr>
+<td><code>ipconfig /all</code></td>
+<td>View detailed networking configuration information.</td>
+</tr>
+<tr>
+<td><code>net</code></td>
+<td>CLI utility containing multiple commands to manage and configure network resources.</td>
+</tr>
+<tr>
+<td><code>net share</code></td>
+<td>Displays info about all of the resources that are shared on the local computer.</td>
+</tr>
+<tr>
+<td><code>net view</code></td>
+<td>Displays a list of domains, computers, or resources being shared by the specified computer.</td>
+</tr>
+<tr>
+<td><code>arp</code></td>
+<td>Displays and manages the contents and entries within the Address Resolution Protocol (ARP) cache.</td>
+</tr>
+<tr>
+<td><code>arp /a</code></td>
+<td>Displays the contents and entries contained within the Address Resolution Protocol (ARP) cache.</td>
+</tr>
+<tr>
+<td><code>netstat -an</code></td>
+<td>Display current network connections.</td>
+</tr>
+<tr>
+<td><code>nslookup &lt;query&gt;</code></td>
+<td>Query DNS for a name or address.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="powershell_3">PowerShell</h3>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Get-NetIPInterface -ifIndex &lt;#&gt;</code></td>
+<td>Retrieve network adapter properties of the interface listed as ifIndex #.</td>
+</tr>
+<tr>
+<td><code>Get-NetIPAddress</code></td>
+<td>Retrieves the IP configurations of each adapter. Similar to IPConfig.</td>
+</tr>
+<tr>
+<td><code>Get-NetNeighbor</code></td>
+<td>Retrieves the neighbor entries from the cache. Similar to arp -a.</td>
+</tr>
+<tr>
+<td><code>Get-Netroute</code></td>
+<td>Will print the current route table. Similar to IPRoute.</td>
+</tr>
+<tr>
+<td><code>Set-NetAdapter</code></td>
+<td>Set basic adapter properties at the Layer-2 level, such as VLAN id, description, and MAC-Address.</td>
+</tr>
+<tr>
+<td><code>Set-NetIPInterface</code></td>
+<td>Modifies the settings of an interface to include DHCP status, MTU, and other metrics.</td>
+</tr>
+<tr>
+<td><code>Set-NetIPAddress</code></td>
+<td>Modifies the configuration of a network adapter.</td>
+</tr>
+<tr>
+<td><code>Disable-NetAdapter</code></td>
+<td>Used to disable network adapter interfaces.</td>
+</tr>
+<tr>
+<td><code>Enable-NetAdapter</code></td>
+<td>Used to turn network adapters back on and allow network connections.</td>
+</tr>
+<tr>
+<td><code>Restart-NetAdapter</code></td>
+<td>Used to restart an adapter. It can be useful to help push changes made to adapter settings.</td>
+</tr>
+<tr>
+<td><code>test-NetConnection</code></td>
+<td>Allows for diagnostic checks to be run on a connection. It supports ping, tcp, route tracing, and more.</td>
+</tr>
+<tr>
+<td><code>Get-WindowsCapability -Online &lt;PIPE&gt; Where-Object Name -like 'OpenSSH*'</code></td>
+<td>List Windows packages for OpenSSH.</td>
+</tr>
+<tr>
+<td><code>Add-WindowsCapability -Online -Name OpenSSH.Client~~~~0.0.1.0</code></td>
+<td>Install the SSH package to the host.</td>
+</tr>
+<tr>
+<td><code>ssh &lt;user&gt;@&lt;ip address&gt;</code></td>
+<td>Basic SSH connect string.</td>
+</tr>
+<tr>
+<td><code>ssh-keygen</code></td>
+<td>Generate SSH keys for the user you run the command as. This enables the use of the user for remote login.</td>
+</tr>
+<tr>
+<td><code>winrm quickconfig</code></td>
+<td>Enable WinRM.</td>
+</tr>
+<tr>
+<td><code>Test-WSMan -ComputerName "10.129.224.248"</code></td>
+<td>Test if the host specified has WinRM running.</td>
+</tr>
+<tr>
+<td><code>Enter-PSSession -ComputerName 10.129.224.248 -Credential htb-student -Authentication Negotiate</code></td>
+<td>Start a remote PowerShell session with the host specified.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="environment-variables">Environment Variables</h2>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>%EXAMPLE_VARIABLE%</code></td>
+<td>Example format for an environment variable.</td>
+</tr>
+<tr>
+<td><code>set</code></td>
+<td>Prints all available environment variables on the system.</td>
+</tr>
+<tr>
+<td><code>set &lt;%VARIABLE_NAME%&gt;</code></td>
+<td>Prints out the value of the environment variable specified. It can also be used to set the variable's value.</td>
+</tr>
+<tr>
+<td><code>echo &lt;%VARIABLE_NAME%&gt;</code></td>
+<td>Prints out the value of the environment variable specified. It cannot make any edits to variables and will only print out the values to the console.</td>
+</tr>
+<tr>
+<td><code>set &lt;%VARIABLE_NAME%&gt;=&lt;Value&gt;</code></td>
+<td>Creates a new environment variable or modifies an existing one and sets the value for the current command line session.</td>
+</tr>
+<tr>
+<td><code>setx &lt;%VARIABLE_NAME%&gt; &lt;Value&gt;</code></td>
+<td>Creates a new environment variable or modifies an existing one and sets the value globally by making changes to the registry.</td>
+</tr>
+<tr>
+<td><code>set &lt;%VARIABLE_NAME%&gt;=</code></td>
+<td>Removes the environment variable with the specified name for the current command line session.</td>
+</tr>
+<tr>
+<td><code>setx &lt;%VARIABLE_NAME%&gt; ""</code></td>
+<td>Removes the environment variable with the specified name globally.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="services">Services</h2>
+<h3 id="cmdexe_4">CMD.exe</h3>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>sc query</code></td>
+<td>Lists all running services and provides additional information for each service.</td>
+</tr>
+<tr>
+<td><code>sc query &lt;Name&gt;</code></td>
+<td>Lists details about a specific service by name.</td>
+</tr>
+<tr>
+<td><code>sc start &lt;Name&gt;</code></td>
+<td>Start a service by name.</td>
+</tr>
+<tr>
+<td><code>sc stop &lt;Name&gt;</code></td>
+<td>Stop a service by name.</td>
+</tr>
+<tr>
+<td><code>sc config &lt;Name&gt; start= disabled</code></td>
+<td>Change settings of the service specified.</td>
+</tr>
+<tr>
+<td><code>tasklist /svc</code></td>
+<td>Provide a list of services running under each process on the system.</td>
+</tr>
+<tr>
+<td><code>net start</code></td>
+<td>List all running services.</td>
+</tr>
+<tr>
+<td><code>wmic service list brief</code></td>
+<td>List all services on the system using WMIC. Includes information such as: ExitCode, Name, ProcessID, StartMode, State, and Status.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="powershell_4">PowerShell</h3>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Get-service</code></td>
+<td>List all services</td>
+</tr>
+<tr>
+<td><code>Get-Service &lt;PIPE&gt; ft DisplayName,Status</code></td>
+<td>List all services and format their information by DisplayName and Status.</td>
+</tr>
+<tr>
+<td><code>Get-Service &lt;PIPE&gt; where DisplayName -like '*Name*' &lt;PIPE&gt; ft DisplayName,ServiceName,Status</code></td>
+<td>Query for a specific service whose name matches 'name'.</td>
+</tr>
+<tr>
+<td><code>Start-Service &lt;Name&gt;</code></td>
+<td>Start a service by name.</td>
+</tr>
+<tr>
+<td><code>Stop-Service &lt;Name&gt;</code></td>
+<td>Stop a service by name.</td>
+</tr>
+<tr>
+<td><code>Set-Service -Name &lt;Name&gt; -StartType Disabled</code></td>
+<td>Change settings of the service specified.</td>
+</tr>
+<tr>
+<td><code>Get-service -ComputerName ACADEMY-ICL-DC</code></td>
+<td>Remote query of a hosts services.</td>
+</tr>
+<tr>
+<td><code>Get-Service -ComputerName ACADEMY-ICL-DC \| Where-Object {$_.Status -eq "Running"}</code></td>
+<td>Remote query of services filtered to only show those that are Running.</td>
+</tr>
+<tr>
+<td><code>Invoke-command -ComputerName ACADEMY-ICL-DC,LOCALHOST -ScriptBlock {Get-Service -Name 'windefend'}</code></td>
+<td>Issue the Get-Service command on a list of hosts.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="scheduled-tasks">Scheduled Tasks</h2>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>schtasks</code></td>
+<td>Displays all tasks scheduled on the local machine.</td>
+</tr>
+<tr>
+<td><code>schtasks /query</code></td>
+<td>Displays all tasks scheduled on the local machine. Interchangeable with schtasks command.</td>
+</tr>
+<tr>
+<td><code>schtasks /query /V /FO list</code></td>
+<td>Displays all scheduled tasks with verbose information in a list format.</td>
+</tr>
+<tr>
+<td><code>schtasks /create</code></td>
+<td>Allows for the creation of scheduled tasks.</td>
+</tr>
+<tr>
+<td><code>schtasks /create /sc &lt;Schedule Frequency&gt; /tn &lt;Task Name&gt; /tr &lt;Program Path&gt;</code></td>
+<td>Creates a new scheduled task based on a select schedule, with a provided name, and a program specified to run when the task starts.</td>
+</tr>
+<tr>
+<td><code>schtasks /change</code></td>
+<td>Allows for modification of an existing scheduled task.</td>
+</tr>
+<tr>
+<td><code>schtasks /change /tn &lt;Task Name&gt; /ru &lt;Username&gt; /rp &lt;Password&gt;</code></td>
+<td>Modifies a scheduled task with a specified name to run under the permissions of the user account using the provided password for authentication.</td>
+</tr>
+<tr>
+<td><code>schtasks /delete</code></td>
+<td>Allows for the deletion of scheduled tasks.</td>
+</tr>
+<tr>
+<td><code>schtasks /delete /tn &lt;Task Name&gt;</code></td>
+<td>Deletes a scheduled task with the matching name.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="interacting-with-the-web">Interacting With The Web</h2>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Invoke-WebRequest -Uri "https://website-to-visit" -Method GET</code></td>
+<td>Utilizes Invoke-WebRequest to browse to a website and issue a GET request.</td>
+</tr>
+<tr>
+<td><code>Invoke-WebRequest -Uri "https://website-to-visit.html" -Method GET &lt;PIPE&gt; fl Images</code></td>
+<td>Issues a GET request to the site specified and then pipes the output to format a list of all image files listed in the site.</td>
+</tr>
+<tr>
+<td><code>Invoke-WebRequest -Uri "https://website-to-visit\file.ps1" -OutFile "C:\&lt;filename&gt;"</code></td>
+<td>Downloads a file from the website and writes it to disk with -Outfile.</td>
+</tr>
+<tr>
+<td><code>(New-Object Net.WebClient).DownloadFile("https://website-to-visit\tools.zip", "Tools.zip")</code></td>
+<td>Uses the .NET string Net.WebClient to download a file from the URL specified.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="event-log">Event Log</h2>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>wevtutil el</code></td>
+<td>Uses the Windows Events Commandline utility to enumerate all log sources.</td>
+</tr>
+<tr>
+<td><code>wevtutil gl "name"</code></td>
+<td>Will gather config information about the log specified.</td>
+</tr>
+<tr>
+<td><code>wevtutil qe &lt;Name&gt; /c:5 /rd:true /f:text</code></td>
+<td>Query a log for events.</td>
+</tr>
+<tr>
+<td><code>wevtutil epl &lt;Name&gt; C:\system_export.evtx</code></td>
+<td>Export a Log.</td>
+</tr>
+<tr>
+<td><code>Get-WinEvent -ListLog *</code></td>
+<td>List all logging facilities using PowerShell cmdlets.</td>
+</tr>
+<tr>
+<td><code>Get-WinEvent -LogName 'Name' -MaxEvents 5 &lt;PIPE&gt; Select-Object -ExpandProperty Message</code></td>
+<td>View the messages of a specific log.</td>
+</tr>
+<tr>
+<td><code>Get-WinEvent -FilterHashTable @{LogName='Security';ID='4625 '}</code></td>
+<td>Query for a specific log by eventID.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="windows-registry">Windows Registry</h2>
+<h3 id="registry-hives">Registry Hives</h3>
+<table>
+<thead>
+<tr>
+<th>Hives</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>HKEY_LOCAL_MACHINE</code> (HKLM)</td>
+<td>This subtree contains information about the computer's physical state, such as hardware and operating system data, bus types, memory, device drivers, and more.</td>
+</tr>
+<tr>
+<td><code>HKEY_CURRENT_CONFIG</code> (HKCC)</td>
+<td>This section contains records for the host's current hardware profile. (shows the variance between current and default setups) Think of this as a redirection of the HKLM CurrentControlSet profile key.</td>
+</tr>
+<tr>
+<td><code>HKEY_CLASSES_ROOT</code> (HKCR)</td>
+<td>Filetype information, UI extensions, and backward compatibility settings are defined here.</td>
+</tr>
+<tr>
+<td><code>HKEY_CURRENT_USER</code> (HKCU)</td>
+<td>Value entries here define each user's specific OS and software settings. Roaming profile settings, including user preferences, are stored under HKCU.</td>
+</tr>
+<tr>
+<td><code>HKEY_USERS</code> (HKU)</td>
+<td>The local computer's default User profile and current user configuration settings are defined under HKU.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="registry-commands">Registry Commands</h3>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Get-Item -Path Registry::&lt;HIVE&gt;\Path-to-key\ &lt;PIPE&gt; Select-Object -ExpandProperty Property</code></td>
+<td>See the sub-keys and properties of a registry key.</td>
+</tr>
+<tr>
+<td><code>Get-ChildItem -Path &lt;HIVE&gt;:\Path-to-key -Recurse</code></td>
+<td>Recursively search through a Key and all subkeys.</td>
+</tr>
+<tr>
+<td><code>Get-ItemProperty -Path Registry::&lt;HIVE&gt;\Path-to-key\key</code></td>
+<td>View the properties and values of a specific key.</td>
+</tr>
+<tr>
+<td><code>REG QUERY &lt;HIVE&gt;\PATH\KEY</code></td>
+<td>Use reg.exe to query the registry.</td>
+</tr>
+<tr>
+<td><code>REG QUERY &lt;HIVE&gt; /F "Password" /t REG_SZ /S /K</code></td>
+<td>Search for specific strings within the Registry hive.</td>
+</tr>
+<tr>
+<td><code>New-Item -Path &lt;HIVE&gt;:\PATH\ -Name KeyName</code></td>
+<td>Create a new Registry Key.</td>
+</tr>
+<tr>
+<td><code>New-ItemProperty -Path &lt;HIVE&gt;:\PATH\KEY -Name "ValueName" -PropertyType String -Value "C:\Users\htb-student\Downloads\payload.exe"</code></td>
+<td>Set a new Value pair within a registry Key.</td>
+</tr>
+<tr>
+<td><code>REG add "&lt;HIVE&gt;\PATH\KEY" /v access /t REG_SZ /d "C:\Users\htb-student\Downloads\payload.exe"</code></td>
+<td>Use Reg.exe to create a new key/value pair.</td>
+</tr>
+<tr>
+<td><code>Remove-ItemProperty -Path &lt;HIVE&gt;:\PATH\KEY -Name "name"</code></td>
+<td>Delete a key/value from the registry.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="powershell-scripting">PowerShell Scripting</h2>
+<h3 id="powershell-extensions">PowerShell Extensions</h3>
+<table>
+<thead>
+<tr>
+<th>Extension</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>PS1</code></td>
+<td>The *.ps1 file extension represents executable PowerShell scripts.</td>
+</tr>
+<tr>
+<td><code>PSM1</code></td>
+<td>The *.psm1 file extension represents a PowerShell module file. It defines what the module is and what is contained within it.</td>
+</tr>
+<tr>
+<td><code>PSD1</code></td>
+<td>The *.psd1 is a PowerShell data file detailing the contents of a PowerShell module in a table of key/value pairs.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="commands-for-building-a-module">Commands For Building A Module</h3>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>New-ModuleManifest \Path\&lt;filename&gt;</code></td>
+<td>This will create the initial manifest for a PowerShell module in the directory you specify.</td>
+</tr>
+<tr>
+<td><code>ni &lt;filename&gt;.psm1 -ItemType File</code></td>
+<td>Creates a PowerShell module file.</td>
+</tr>
+<tr>
+<td><code>Import-Module &lt;modulename&gt;</code></td>
+<td>Can be used to import a module into your PowerShell session or to specify modules to import when you run a PowerShell module.</td>
+</tr>
+<tr>
+<td><code>$Variable = &lt;input&gt;</code></td>
+<td>Creates a callable variable and sets its value to the input specified.</td>
+</tr>
+<tr>
+<td><code>function &lt;name&gt; { Tasks to run }</code></td>
+<td>Create a new function within a Module for use.</td>
+</tr>
+<tr>
+<td><code># Comment block</code></td>
+<td>Creates a one-line comment in a script or Module.</td>
+</tr>
+<tr>
+<td><code>&lt;# Comments #&gt;</code></td>
+<td>Creates a multi-line comment block. Everything that falls within the &lt;# #&gt; regardless of line count will be considered a part of the comment block.</td>
+</tr>
+<tr>
+<td><code>Export-ModuleMember -Function &lt;name&gt; -Variable &lt;variablename&gt;</code></td>
+<td>Specifies that the functions and variables listed can be exported by other scripts, sessions, or modules.</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../pivoting-tunneling-port-forwarding/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Pivoting, Tunneling, and Port Forwarding">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Pivoting, Tunneling, and Port Forwarding
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../windows-attacks-and-defense/" class="md-footer__link md-footer__link--next" aria-label="Next: Windows Attacks &amp; Defense">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Windows Attacks & Defense
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2026 Héctor T.
+    </div>
+  
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/hec7orci7o" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://linkedin.com/in/hec7or" target="_blank" rel="noopener" title="linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3M135.4 416H69V202.2h66.5V416zM102.2 96a38.5 38.5 0 1 1 0 77 38.5 38.5 0 1 1 0-77m282.1 320h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.instant.prefetch", "navigation.tracking", "navigation.path", "navigation.prune", "navigation.indexes", "navigation.top", "navigation.footer", "toc.follow", "search.suggest"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../javascripts/extra.js"></script>
+      
+    
+  </body>
+</html>
