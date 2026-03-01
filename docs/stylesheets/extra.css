@@ -1,0 +1,52 @@
+/* --- Footer --------------------------------------------------------- */
+.md-footer { display: none; }
+
+/* =====================================================================
+   TAGS — Tailwind-inspired: light bg + vivid text
+   JS (extra.js) adds  data-tag="slug"  to every <span class="md-tag">
+   ===================================================================== */
+
+/* --- Base: pill shape for all tags ---------------------------------- */
+.md-tag {
+  border-radius: 9999px;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 0.2em 0.65em;
+  transition: filter 0.15s ease;
+}
+
+.md-tag:hover {
+  filter: brightness(0.92);
+}
+
+/* --- Certifications (color by team theme) --------------------------- */
+/* CPTS  — red team        → red   */
+.md-tag[data-tag="cpts"] { background-color: #fee2e2; color: #dc2626; }
+/* CWES  — red team / web  → orange */
+.md-tag[data-tag="cwes"] { background-color: #ffedd5; color: #ea580c; }
+/* CJCA  — mixed / junior  → purple */
+.md-tag[data-tag="cjca"] { background-color: #f3e8ff; color: #9333ea; }
+/* CDSA  — blue team / SOC → blue   */
+.md-tag[data-tag="cdsa"] { background-color: #dbeafe; color: #2563eb; }
+
+/* --- Difficulty ----------------------------------------------------- */
+.md-tag[data-tag="easy"]   { background-color: #dcfce7; color: #16a34a; }
+.md-tag[data-tag="medium"] { background-color: #fef3c7; color: #d97706; }
+.md-tag[data-tag="hard"]   { background-color: #fee2e2; color: #dc2626; }
+
+/* --- Type ----------------------------------------------------------- */
+.md-tag[data-tag="offensive"] { background-color: #fee2e2; color: #dc2626; }
+.md-tag[data-tag="defensive"] { background-color: #dbeafe; color: #2563eb; }
+.md-tag[data-tag="general"]   { background-color: #f1f5f9; color: #475569; }
+.md-tag[data-tag="purple"]    { background-color: #f3e8ff; color: #9333ea; }
+
+/* --- Categories (indigo) ------------------------------------------- */
+.md-tag[data-tag="fundamentals"],
+.md-tag[data-tag="recon"],
+.md-tag[data-tag="exploitation"],
+.md-tag[data-tag="web"],
+.md-tag[data-tag="post-exploitation"],
+.md-tag[data-tag="active-directory"],
+.md-tag[data-tag="defensive"] { background-color: #e0e7ff; color: #4f46e5; }

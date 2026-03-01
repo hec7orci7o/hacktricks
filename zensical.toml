@@ -1,0 +1,151 @@
+[project]
+site_name = "Hacking Notes"
+site_url = "https://hec7orci7o.github.io/hacktricks/"
+
+extra_css = ["stylesheets/extra.css"]
+extra_javascript = ["javascript/extra.js"]
+
+nav = [
+  { "Home" = "index.md" },
+  { "Fundamentals" = [
+    { "Getting Started" = "content/fundamentals/getting-started.md" },
+    { "Linux Fundamentals" = "content/fundamentals/linux-fundamentals.md" },
+    { "Windows Fundamentals" = "content/fundamentals/windows-fundamentals.md" },
+    { "Introduction to Windows Command Line" = "content/fundamentals/introduction-to-windows-command-line.md" },
+    { "Web Requests" = "content/fundamentals/web-requests.md" },
+    { "Pentest in a Nutshell" = "content/fundamentals/pentest-in-a-nutshell.md" },
+  ]},
+  { "Reconnaissance" = [
+    { "Network Enumeration with Nmap" = "content/reconnaissance/network-enumeration-with-nmap.md" },
+    { "Footprinting" = "content/reconnaissance/footprinting.md" },
+    { "Information Gathering - Web Edition" = "content/reconnaissance/information-gathering-web-edition.md" },
+  ]},
+  { "Exploitation" = [
+    { "Using the Metasploit Framework" = "content/exploitation/using-the-metasploit-framework.md" },
+    { "Shells & Payloads" = "content/exploitation/shells-payloads.md" },
+    { "Login Brute Forcing" = "content/exploitation/login-brute-forcing.md" },
+    { "Password Attacks" = "content/exploitation/password-attacks.md" },
+    { "Cracking Passwords with Hashcat" = "content/exploitation/cracking-passwords-with-hashcat.md" },
+    { "Attacking Common Services" = "content/exploitation/attacking-common-services.md" },
+    { "Attacking Common Applications" = "content/exploitation/attacking-common-applications.md" },
+  ]},
+  { "Web" = [
+    { "Hacking WordPress" = "content/web/hacking-wordpress.md" },
+    { "Using Web Proxies" = "content/web/using-web-proxies.md" },
+    { "Attacking Web Applications with Ffuf" = "content/web/attacking-web-applications-with-ffuf.md" },
+    { "Web Fuzzing" = "content/web/web-fuzzing.md" },
+    { "SQL Injection Fundamentals" = "content/web/sql-injection-fundamentals.md" },
+    { "SQLMap Essentials" = "content/web/sqlmap-essentials.md" },
+    { "Cross-Site Scripting (XSS)" = "content/web/cross-site-scripting-xss.md" },
+    { "File Inclusion" = "content/web/file-inclusion.md" },
+    { "File Upload Attacks" = "content/web/file-upload-attacks.md" },
+    { "Command Injections" = "content/web/command-injections.md" },
+    { "Web Attacks" = "content/web/web-attacks.md" },
+    { "Server-side Attacks" = "content/web/server-side-attacks.md" },
+    { "Broken Authentication" = "content/web/broken-authentication.md" },
+    { "Attacking GraphQL" = "content/web/attacking-graphql.md" },
+    { "JavaScript Deobfuscation" = "content/web/javascript-deobfuscation.md" },
+  ]},
+  { "Post-Exploitation" = [
+    { "File Transfers" = "content/post-exploitation/file-transfers.md" },
+    { "Linux Privilege Escalation" = "content/post-exploitation/linux-privilege-escalation.md" },
+    { "Windows Privilege Escalation" = "content/post-exploitation/windows-privilege-escalation.md" },
+    { "Pivoting, Tunneling, and Port Forwarding" = "content/post-exploitation/pivoting-tunneling-port-forwarding.md" },
+  ]},
+  { "Active Directory" = [
+    { "Introduction to Active Directory" = "content/active-directory/introduction-to-active-directory.md" },
+    { "Active Directory Enumeration & Attacks" = [
+      { "Active Directory Enumeration & Attacks" = "content/active-directory/active-directory-enumeration-attacks/index.md" },
+      { "Tools of the Trade" = "content/active-directory/active-directory-enumeration-attacks/tools.md" },
+    ]},
+    { "Windows Attacks & Defense" = "content/active-directory/windows-attacks-and-defense.md" },
+  ]},
+  { "Defensive" = [
+    { "Intro to Network Traffic Analysis" = "content/defensive/intro-to-network-traffic-analysis.md" },
+    { "Security Monitoring & SIEM Fundamentals" = "content/defensive/security-monitoring-siem-fundamentals.md" },
+  ]},
+]
+
+# ----------------------------------------------------------------------------
+# Markdown extensions — mirrors the Zensical default but with permalink off
+# ----------------------------------------------------------------------------
+[project.markdown_extensions.abbr]
+[project.markdown_extensions.admonition]
+[project.markdown_extensions.attr_list]
+[project.markdown_extensions.def_list]
+[project.markdown_extensions.footnotes]
+[project.markdown_extensions.md_in_html]
+
+[project.markdown_extensions.toc]
+permalink = false
+
+[project.markdown_extensions.pymdownx.arithmatex]
+generic = true
+
+[project.markdown_extensions.pymdownx.betterem]
+[project.markdown_extensions.pymdownx.caret]
+[project.markdown_extensions.pymdownx.details]
+
+[project.markdown_extensions.pymdownx.emoji]
+emoji_generator = "zensical.extensions.emoji.to_svg"
+emoji_index     = "zensical.extensions.emoji.twemoji"
+
+[project.markdown_extensions.pymdownx.highlight]
+anchor_linenums      = true
+line_spans           = "__span"
+pygments_lang_class  = true
+
+[project.markdown_extensions.pymdownx.inlinehilite]
+[project.markdown_extensions.pymdownx.keys]
+[project.markdown_extensions.pymdownx.magiclink]
+[project.markdown_extensions.pymdownx.mark]
+[project.markdown_extensions.pymdownx.smartsymbols]
+[project.markdown_extensions.pymdownx.tilde]
+
+[project.markdown_extensions.pymdownx.tabbed]
+alternate_style      = true
+combine_header_slug  = true
+
+[project.markdown_extensions.pymdownx.tasklist]
+custom_checkbox = true
+
+[[project.markdown_extensions.pymdownx.superfences.custom_fences]]
+name  = "mermaid"
+class = "mermaid"
+
+# ----------------------------------------------------------------------------
+[project.theme]
+# ----------------------------------------------------------------------------
+language = "en"
+features = [
+  "navigation.instant",
+  "navigation.instant.prefetch",
+  "navigation.tracking",
+  "navigation.path",
+  "navigation.indexes",
+  "navigation.top",
+
+  "navigation.sections",
+  "toc.follow",
+  "search.suggest",
+  "content.code.copy",
+  "content.code.annotate",
+]
+
+[project.theme.font]
+text = "Roboto"
+code = "Roboto Mono"
+
+[[project.theme.palette]]
+scheme = "default"
+toggle.icon = "lucide/sun"
+toggle.name = "Switch to dark mode"
+
+[[project.theme.palette]]
+scheme = "slate"
+toggle.icon = "lucide/moon"
+toggle.name = "Switch to light mode"
+
+# ----------------------------------------------------------------------------
+[project.extra]
+generator = false

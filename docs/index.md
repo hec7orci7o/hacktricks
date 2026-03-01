@@ -1,17 +1,69 @@
-# Welcome to MkDocs
+---
+hide:
+  - navigation
+  - toc
+---
 
-For full documentation visit [mkdocs.org](https://www.mkdocs.org).
+# Hacking Notes
 
-## Commands
+Personal cheatsheets from HackTheBox Academy modules.
 
-* `mkdocs new [dir-name]` - Create a new project.
-* `mkdocs serve` - Start the live-reloading docs server.
-* `mkdocs build` - Build the documentation site.
-* `mkdocs -h` - Print help message and exit.
+<div class="grid cards" markdown>
 
-## Project layout
+-   :material-hammer-wrench: __Fundamentals__
 
-    mkdocs.yml    # The configuration file.
-    docs/
-        index.md  # The documentation homepage.
-        ...       # Other markdown pages, images and other files.
+    ---
+
+    OS basics, web requests and pentesting methodology.
+
+    [:octicons-arrow-right-24: Go](content/fundamentals/getting-started.md)
+
+-   :material-radar: __Reconnaissance__
+
+    ---
+
+    Network scanning, footprinting and web information gathering.
+
+    [:octicons-arrow-right-24: Go](content/reconnaissance/network-enumeration-with-nmap.md)
+
+-   :material-sword: __Exploitation__
+
+    ---
+
+    Metasploit, shells, brute forcing and password attacks.
+
+    [:octicons-arrow-right-24: Go](content/exploitation/using-the-metasploit-framework.md)
+
+-   :material-web: __Web__
+
+    ---
+
+    SQLi, XSS, file inclusion, injections and authentication attacks.
+
+    [:octicons-arrow-right-24: Go](content/web/sql-injection-fundamentals.md)
+
+-   :material-flag: __Post-Exploitation__
+
+    ---
+
+    Privilege escalation, file transfers and pivoting.
+
+    [:octicons-arrow-right-24: Go](content/post-exploitation/linux-privilege-escalation.md)
+
+-   :material-microsoft-windows: __Active Directory__
+
+    ---
+
+    AD enumeration, attacks and defense techniques.
+
+    [:octicons-arrow-right-24: Go](content/active-directory/introduction-to-active-directory.md)
+
+-   :material-shield-check: __Defensive__
+
+    ---
+
+    Network traffic analysis and SIEM fundamentals.
+
+    [:octicons-arrow-right-24: Go](content/defensive/intro-to-network-traffic-analysis.md)
+
+</div>
